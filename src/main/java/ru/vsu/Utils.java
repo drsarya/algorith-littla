@@ -1,33 +1,37 @@
 package ru.vsu;
 
 public class Utils {
+
     public static int INF = Integer.MAX_VALUE / 2;
 
     public static void checkCycle(Node[][] graph) {
         boolean[] infRow = new boolean[graph.length];
         boolean[] infColumn = new boolean[graph.length];
 
-
-        for (int i = 0; i < graph.length; i++)
-            for (int j = 0; j < graph[i].length; j++)
+        for (int i = 0; i < graph.length; i++) {
+            for (int j = 0; j < graph[i].length; j++) {
                 if (graph[i][j].weight == INF) {
                     infRow[i] = true;
                     infColumn[j] = true;
                 }
+            }
+        }
         // поиск строки, не содержащей бесконечности
         int notInf = 0;
-        for (int i = 0; i < infRow.length; i++)
+        for (int i = 0; i < infRow.length; i++) {
             if (!infRow[i]) {
                 notInf = i;
                 break;
             }
+        }
 
         // поиск столбца, не содержащего бесконечности и добавление бесконечности
-        for (int j = 0; j < infColumn.length; j++)
+        for (int j = 0; j < infColumn.length; j++) {
             if (!infColumn[j]) {
                 graph[notInf][j].weight = INF;
                 break;
             }
+        }
     }
 
     public static Node[][] copyGraph(Node[][] graph) {
@@ -64,6 +68,32 @@ public class Utils {
             }
         }
         return e;
+    }
+
+    public static void printMatrix(Node[][] matrix, boolean printEst) {
+        for (int j = 0; j < matrix.length; j++) {
+            System.out.print("    " + matrix[0][j].edge.column);
+        }
+        System.out.println();
+        for (Node[] nodes : matrix) {
+            System.out.print(nodes[0].edge.row + "  ");
+            for (int j = 0; j < nodes.length; j++) {
+                if (nodes[j].weight == INF) {
+                    System.out.printf("%5s", "∞ |");
+                } else {
+                    if (nodes[j].weight == 0) {
+                        if (printEst) {
+                            System.out.printf("%2d/%d|", nodes[j].weight, nodes[j].estimate);
+                        } else {
+                            System.out.printf("%4d|", nodes[j].weight);
+                        }
+                    } else {
+                        System.out.printf("%4d|", nodes[j].weight);
+                    }
+                }
+            }
+            System.out.println();
+        }
     }
 
     public static void setEstimates(Node[][] graph) {
@@ -142,6 +172,9 @@ public class Utils {
         if (indexRow < 0) {
             return new Node[0][];
         }
+        if (matrix.length == 0) {
+            return new Node[0][0];
+        }
         Node[][] modMatrix = new Node[matrix.length - 1][matrix[0].length];
         int indForDelete = 0;
         for (int i = 0; i < matrix.length; i++) {
@@ -160,6 +193,23 @@ public class Utils {
             }
         }
         return modMatrix;
+    }
+
+    /**
+     * Проверить, есть ли пути в графе
+     *
+     * @param graph граф для анализа
+     * @return true - пути есть, false - путей не осталось
+     */
+    public static boolean isGraphWithPaths(Node[][] graph) {
+        for (int i = 0; i < graph.length; i++) {
+            for (int j = 0; j < graph.length; j++) {
+                if (graph[i][j].weight != INF) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     /**

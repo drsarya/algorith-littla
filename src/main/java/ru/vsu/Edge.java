@@ -7,6 +7,7 @@ import java.util.List;
  * Описывает ребро выбранного пути
  */
 public class Edge implements Comparable<Edge> {
+
     /**
      * Из какой вершины
      */
@@ -18,15 +19,12 @@ public class Edge implements Comparable<Edge> {
 
     @Override
     public String toString() {
-        return "Edge{" +
-            "row=" + (row) +
-            ", col=" + (column) +
-            '}';
+        return "Edge{" + "row=" + row + ", col=" + column + '}';
     }
 
     public Edge(int row, int column) {
-        this.column = column;
         this.row = row;
+        this.column = column;
     }
 
     public Edge() {
