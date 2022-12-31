@@ -47,7 +47,6 @@ public class GraphDrawer extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                System.out.println("mouseClicked " + e.getX() + " " + e.getY());
                 x = e.getX();
                 y = e.getY();
                  revalidate();
